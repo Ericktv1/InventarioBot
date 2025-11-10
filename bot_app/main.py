@@ -5,7 +5,7 @@ from services.logging import logger
 from .wiring import build_app  # si usas tu propia función build_app
 
 TOKEN = os.getenv("TELEGRAM_BOT_TOKEN")
-RENDER_URL = os.getenv("RENDER_URL")
+RENDER_URL = os.getenv("RENDER_EXTERNAL_URL")
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await update.message.reply_text("¡Hola! Soy tu bot de inventario 😊")
