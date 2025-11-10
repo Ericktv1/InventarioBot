@@ -21,3 +21,6 @@ setuptools>=68.0.0
 wheel>=0.42.0
 faster-whisper==1.0.3
 ctranslate2==4.6.1
+
+ollama
+
