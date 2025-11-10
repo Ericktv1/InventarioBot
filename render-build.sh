@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
-# Instalar dependencias del sistema necesarias para FFmpeg y PyAV
+set -eux
+
+# Instalar librerías del sistema necesarias para FFmpeg y CTranslate2
 apt-get update && apt-get install -y \
     ffmpeg \
     libavformat-dev \
@@ -8,7 +10,13 @@ apt-get update && apt-get install -y \
     libavutil-dev \
     libavfilter-dev \
     libswscale-dev \
-    libswresample-dev
+    libswresample-dev \
+    build-essential \
+    pkg-config \
+    python3-dev
 
-# Instalar dependencias de Python
+# Actualizar pip y setuptools
+pip install --upgrade pip setuptools wheel
+
+# Instalar dependencias del proyecto
 pip install -r requirements.txt
