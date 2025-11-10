@@ -1,0 +1,27 @@
+version: "3.8"
+
+services:
+  n8n:
+    image: n8nio/n8n:latest
+    container_name: n8n
+    restart: unless-stopped
+    ports:
+      - "5678:5678"
+    environment:
+      - N8N_PROTOCOL=http
+      - N8N_PORT=5678
+      - N8N_BASIC_AUTH_ACTIVE=true
+      - N8N_BASIC_AUTH_USER=Erick
+      - N8N_BASIC_AUTH_PASSWORD=Er1cktrujill0
+      - N8N_ENCRYPTION_KEY=clave_de_32_caracteres_segura
+        # Databricks
+      - DATABRICKS_HOST=https://dbc-112e5f39-c162.cloud.databricks.com
+      - DATABRICKS_TOKEN=${DATABRICKS_TOKEN}
+      - DATABRICKS_WAREHOUSE_ID=169d47a64a3a46cf      # (si vas a ejecutar SQL)
+      - DATABRICKS_CATALOG=hive_metastore             # ajusta si usas Unity Catalog
+      - DATABRICKS_SCHEMA=default
+    volumes:
+      - n8n_data:/home/node/.n8n
+
+volumes:
+  n8n_data:
