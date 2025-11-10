@@ -1,22 +1,18 @@
-import ollama
-from domain.state import chats
-from domain.prompts import system_prompt
-from services.config import OLLAMA_HOST, MODEL
-from utils.text import strip_think
+import os
 
-_client = ollama.Client(host=OLLAMA_HOST)
+USE_OLLAMA = os.getenv("USE_OLLAMA", "0") == "1"
 
-def messages_for(chat_id: int):
-    msgs = [{"role": "system", "content": system_prompt()}]
-    msgs.extend(list(chats[chat_id]))
-    return msgs
+if USE_OLLAMA:
+    import ollama
 
-def chat(chat_id: int, temperature: float = 0.2):
-    resp = _client.chat(
-        model=MODEL,
-        messages=messages_for(chat_id),
-        options={"num_ctx": 1024, "temperature": temperature},
-        keep_alive="1h",
-    )
-    raw = (resp.get("message") or {}).get("content", "")
-    return strip_think(raw).strip()
+def chat(prompt):
+    if USE_OLLAMA:
+        # Modo local con Ollama
+        return ollama.chat(model=os.getenv("MODEL"), messages=[{"role": "user", "content": prompt}])
+    else:
+        # Modo remoto (Render) usando Gemini
+        import google.generativeai as genai
+        genai.configure(api_key=os.getenv("GOOGLE_API_KEY"))
+        model = genai.GenerativeModel(os.getenv("GEMINI_MODEL", "gemini-1.5-flash"))
+        response = model.generate_content(prompt)
+        return {"message": response.text}
