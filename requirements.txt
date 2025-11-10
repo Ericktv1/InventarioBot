@@ -1,0 +1,23 @@
+python-telegram-bot==20.7
+python-dotenv==1.0.1
+httpx==0.25.2
+
+databricks-sql-connector==2.9.0
+
+google-generativeai==0.8.5
+pydantic==2.12.3
+# Si NO usas TensorFlow/MediaPipe en este entorno, deja que protobuf sea la que pide google-generativeai:
+# (no fijes protobuf)
+
+requests==2.32.3
+typing-extensions>=4.7.0
+colorlog==6.8.2
+
+# Opcional (si usas ASR local):
+# ctranslate2==4.3.1
+# openai-whisper==20231117
+
+setuptools>=68.0.0
+wheel>=0.42.0
+faster-whisper==1.0.3
+ctranslate2==4.3.1
